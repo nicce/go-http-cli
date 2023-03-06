@@ -1,0 +1,16 @@
+* Support POST (Add flag for http verb)
+* Add Makefile with support for the following
+    * Build app (support both arm and amd)
+    * Lint app
+    * Run tests
+* More sophisticated (and faster?) json print (colorize)?
+* Support printing headers
+* Support sending headers
+* Support request latency
+* Add license file
+* Project structure (pkg, internal) ?
+* Version should be dynamically set based on tag
+* Readme
+* Dependabot
+* Automatic versioning
+* Automatic release
