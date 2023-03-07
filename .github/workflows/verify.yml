@@ -1,9 +1,5 @@
 on:
   workflow_call:
-    inputs:
-      environment:
-        required: true
-        type: string
 
 name: Verify
 
@@ -24,7 +20,7 @@ jobs:
       # Setup Go linter
       - name: Go linter (info)
         id: go-linter
-        run: echo "version=$(make go-linter-info)" >> "$GITHUB_OUTPUT"
+        run: echo "version=$(make lint-info)" >> "$GITHUB_OUTPUT"
 
       - name: Go linter (cache)
         uses: actions/cache@69d9d449aced6a2ede0bc19182fadc3a0a42d2b0 # v3.2.6
@@ -33,6 +29,17 @@ jobs:
             ${{ steps.go-linter.outputs.version }}
           key: ${{ runner.os }}-go-linter-${{ steps.go-linter.outputs.version }}
 
+      # Setup GitHub Actions linter
+      - name: GitHub Actions linter (info)
+        id: gha-linter
+        run: echo "version=$(make gha-linter-info)" >> "$GITHUB_OUTPUT"
+
+      - name: GitHub Actions linter (cache)
+        uses: actions/cache@69d9d449aced6a2ede0bc19182fadc3a0a42d2b0 # v3.2.6
+        with:
+          path: |
+            ${{ steps.gha-linter.outputs.version }}
+          key: ${{ runner.os }}-gha-linter-${{ steps.gha-linter.outputs.version }}
 
       # Setup Static Application Security Tests
       - name: Static Application Security Tests (info)
@@ -48,7 +55,10 @@ jobs:
 
       # Run hygiene controls
       - name: Lint Go code
-        run: make go-lint
+        run: make lint
+
+      - name: Lint gha files
+        run: make gha-lint
 
       - name: Test
         run: make test
