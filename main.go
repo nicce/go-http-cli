@@ -5,11 +5,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/urfave/cli/v2"
 	"io"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
@@ -19,17 +20,21 @@ func main() {
 	app.Version = "v0.0.1"
 	app.Action = func(cCtx *cli.Context) error {
 		rawURL := cCtx.Args().Get(0)
+
 		b, err := Execute(cCtx.Context, rawURL)
 		if err != nil {
-			return err
+			return fmt.Errorf("error executing action: %w", err)
 		}
+
 		var out bytes.Buffer
 		err = json.Indent(&out, b, "", "\t")
+
 		if err != nil {
 			fmt.Print(string(b))
 		}
 
-		fmt.Print(out.String())
+		fmt.Print(out)
+
 		return nil
 	}
 
@@ -38,18 +43,26 @@ func main() {
 	}
 }
 
+// Execute - retrieves the response from the url or error if occurred.
 func Execute(ctx context.Context, url string) ([]byte, error) {
 	client := &http.Client{}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
 	res, err := client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error from http client: %w", err)
 	}
 
-	return io.ReadAll(res.Body)
+	defer func() { _ = res.Body.Close() }()
+
+	b, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading body: %w", err)
+	}
+
+	return b, nil
 }
