@@ -1,0 +1,11 @@
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+name: on-pull-request
+
+jobs:
+  Verify:
+    name: Verify
+    uses: ./.github/workflows/verify.yml
+    secrets: inherit

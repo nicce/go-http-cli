@@ -18,6 +18,10 @@ GOSEC_VERSION := 2.14.0
 GOSEC := bin/gosec_v$(GOSEC_VERSION)/gosec
 GOSEC_URL := https://github.com/securego/gosec/releases/download/v$(GOSEC_VERSION)/gosec_$(GOSEC_VERSION)_$(OS)_$(ARCHITECTURE).tar.gz
 
+ACTIONLINT_VERSION := 1.6.23
+ACTIONLINT := bin/actionlint_v$(ACTIONLINT_VERSION)/actionlint
+ACTIONLINT_URL :=  https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash
+
 all: help
 
 clean:
@@ -42,6 +46,15 @@ lint: ${GOLANGCI_LINT}
 ## lint-info: Returns information about the current go linter being used
 lint-info:
 	@echo ${GOLANGCI_LINT}
+
+## gha-lint: Lint the github actions code
+gha-lint: ${ACTIONLINT}
+	@echo "🚀 Linting github actions code"
+	@$(ACTIONLINT)
+
+## gha-linter-info: Returns information about the current github actions linter being used
+gha-linter-info:
+	@echo ${ACTIONLINT}
 
 ## sast: Run gosec static application security tests
 sast: ${GOSEC}
@@ -80,6 +93,12 @@ ${GOSEC}:
 	@curl -sSL ${GOSEC_URL} > bin/gosec.tar.gz
 	@tar -xzf bin/gosec.tar.gz -C $(patsubst %/,%,$(dir ${GOSEC}))
 	@rm -f bin/gosec.tar.gz
+
+${ACTIONLINT}:
+	$(call check_shellcheck_installation)
+	@echo "📦 Installing actionlint v${ACTIONLINT_VERSION}"
+	@mkdir -p $(dir ${ACTIONLINT})
+	@bash <(curl -sSL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) ${ACTIONLINT_VERSION} $(shell dirname ${ACTIONLINT})  > /dev/null 2>&1
 
 ## check_shellcheck_installation: checks if shellcheck is installed. In general it is installed on every ubuntu gha runner.
 check_shellcheck_installation:
