@@ -4,7 +4,6 @@
 * Support sending headers
 * Support request latency
 * Add license file
-* Version should be dynamically set based on tag
 * Readme
 * Automatic versioning
 * Automatic release
