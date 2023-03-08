@@ -4,7 +4,6 @@
 * Support sending headers
 * Support request latency
 * Add license file
-* Project structure (pkg, internal) ?
 * Version should be dynamically set based on tag
 * Readme
 * Automatic versioning
