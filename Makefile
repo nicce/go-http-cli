@@ -74,13 +74,6 @@ ${GOTESTSUM}:
 	@tar -xzf bin/gotestsum.tar.gz -C $(patsubst %/,%,$(dir ${GOTESTSUM}))
 	@rm -f bin/gotestsum.tar.gz
 
-${GOSEC}:
-	@echo "📦 Installing gosec v${GOSEC_VERSION}"
-	@mkdir -p $(dir ${GOSEC})
-	@curl -sSL ${GOSEC_URL} > bin/gosec.tar.gz
-	@tar -xzf bin/gosec.tar.gz -C $(patsubst %/,%,$(dir ${GOSEC}))
-	@rm -f bin/gosec.tar.gz
-
 ${ACTIONLINT}:
 	$(call check_shellcheck_installation)
 	@echo "📦 Installing actionlint v${ACTIONLINT_VERSION}"
