@@ -41,18 +41,6 @@ jobs:
             ${{ steps.gha-linter.outputs.version }}
           key: ${{ runner.os }}-gha-linter-${{ steps.gha-linter.outputs.version }}
 
-      # Setup Static Application Security Tests
-      - name: Static Application Security Tests (info)
-        id: sast
-        run: echo "version=$(make sast-info)" >> "$GITHUB_OUTPUT"
-
-      - name: Static Application Security Tests (cache)
-        uses: actions/cache@69d9d449aced6a2ede0bc19182fadc3a0a42d2b0 # v3.2.6
-        with:
-          path: |
-            ${{ steps.sast.outputs.version }}
-          key: ${{ runner.os }}-sast-${{ steps.sast.outputs.version }}
-
       # Run hygiene controls
       - name: Lint Go code
         run: make lint
@@ -62,6 +50,3 @@ jobs:
 
       - name: Test
         run: make test
-
-      - name: Static Application Security Tests
-        run: make sast

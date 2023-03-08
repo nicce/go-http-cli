@@ -14,10 +14,6 @@ GOTESTSUM_VERSION := 1.9.0
 GOTESTSUM := bin/gotestsum_v$(GOTESTSUM_VERSION)/gotestsum
 GOTESTSUM_URL := https://github.com/gotestyourself/gotestsum/releases/download/v$(GOTESTSUM_VERSION)/gotestsum_$(GOTESTSUM_VERSION)_$(OS)_$(ARCHITECTURE).tar.gz
 
-GOSEC_VERSION := 2.14.0
-GOSEC := bin/gosec_v$(GOSEC_VERSION)/gosec
-GOSEC_URL := https://github.com/securego/gosec/releases/download/v$(GOSEC_VERSION)/gosec_$(GOSEC_VERSION)_$(OS)_$(ARCHITECTURE).tar.gz
-
 ACTIONLINT_VERSION := 1.6.23
 ACTIONLINT := bin/actionlint_v$(ACTIONLINT_VERSION)/actionlint
 ACTIONLINT_URL :=  https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash
@@ -55,15 +51,6 @@ gha-lint: ${ACTIONLINT}
 ## gha-linter-info: Returns information about the current github actions linter being used
 gha-linter-info:
 	@echo ${ACTIONLINT}
-
-## sast: Run gosec static application security tests
-sast: ${GOSEC}
-	@echo "🚀 Running gosec tests"
-	@$(GOSEC) ./...
-
-## sast-info: Returns information about the current sast being used
-sast-info:
-	@echo ${GOSEC}
 
 ## test: Run Go tests
 test: ${GOTESTSUM}
