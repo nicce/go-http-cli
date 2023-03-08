@@ -18,7 +18,7 @@ func main() {
 	app.Action = func(cCtx *cli.Context) error {
 		rawURL := cCtx.Args().Get(0)
 
-		b, err := xhttp.Call(cCtx.Context, rawURL, "GET", nil)
+		b, err := xhttp.Call(cCtx.Context, rawURL, xhttp.Get, nil)
 		if err != nil {
 			return fmt.Errorf("error executing action: %w", err)
 		}
