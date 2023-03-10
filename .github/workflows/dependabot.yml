@@ -1,0 +1,36 @@
+# This workflow automatically approves and merges pull requests made by the dependabot[bot] user.
+
+on:
+  workflow_call:
+
+name: Dependabot
+
+jobs:
+  Dependabot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@4de7a6c08ce727a42e0adbbdc345f761a01240ce # v1.3.6
+        with:
+          github-token: "${{ secrets.GH_TOKEN }}"
+      - name: Auto approve a PR
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
+      - name: Auto rebase a PR
+        run: gh pr merge --rebase "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
+      - name: Auto merge a PR
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GH_TOKEN}}

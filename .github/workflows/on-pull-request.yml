@@ -9,3 +9,8 @@ jobs:
     name: Verify
     uses: ./.github/workflows/verify.yml
     secrets: inherit
+  Dependabot:
+    name: Dependabot
+    needs: Verify
+    uses: ./.github/workflows/dependabot.yml
+    secrets: inherit
