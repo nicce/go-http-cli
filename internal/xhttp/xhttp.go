@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
 
 // HttpMethod - defines the HttpMethod type.
@@ -18,14 +19,22 @@ const (
 	Post = "POST"
 )
 
+// HttpResponse - contains information about the http response.
+type HttpResponse struct {
+	Body        []byte
+	LatencyInMs int64
+}
+
 // Call - retrieves the body from the given URL.
-func Call(ctx context.Context, url string, method HttpMethod, body []byte) ([]byte, error) {
+func Call(ctx context.Context, url string, method HttpMethod, body []byte) (*HttpResponse, error) {
 	client := &http.Client{}
 
 	req, err := http.NewRequestWithContext(ctx, string(method), url, bytes.NewReader(body))
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
+
+	start := time.Now()
 
 	res, err := client.Do(req)
 	if err != nil {
@@ -34,10 +43,15 @@ func Call(ctx context.Context, url string, method HttpMethod, body []byte) ([]by
 
 	defer func() { _ = res.Body.Close() }()
 
+	latency := time.Since(start).Milliseconds()
+
 	b, err := io.ReadAll(res.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading body: %w", err)
 	}
 
-	return b, nil
+	return &HttpResponse{
+		Body:        b,
+		LatencyInMs: latency,
+	}, nil
 }

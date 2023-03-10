@@ -7,12 +7,19 @@ import (
 )
 
 // PrettyFormat - format a byte array in to a json string. Returns an error if the byte array can't be formatted as json.
-func PrettyFormat(b []byte) (string, error) {
+func PrettyFormat(b []byte, compact bool) (string, error) {
 	var out bytes.Buffer
-	err := json.Indent(&out, b, "", "  ")
 
-	if err != nil {
-		return "", fmt.Errorf("error formatting byte array: %w", err)
+	if compact {
+		err := json.Compact(&out, b)
+		if err != nil {
+			return "", fmt.Errorf("error compacting byte array: %w", err)
+		}
+	} else {
+		err := json.Indent(&out, b, "", "  ")
+		if err != nil {
+			return "", fmt.Errorf("error indenting byte array: %w", err)
+		}
 	}
 
 	return out.String(), nil
