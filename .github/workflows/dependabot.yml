@@ -5,13 +5,14 @@ on:
 
 name: Dependabot
 
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
 jobs:
   Dependabot:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      actions: write
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - name: Dependabot metadata
