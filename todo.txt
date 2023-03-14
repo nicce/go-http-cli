@@ -1,8 +1,7 @@
 * Support POST (Add flag for http verb)
-* Support printing headers
 * Support sending headers
 * Add license file
 * Readme
 * Automatic versioning
 * Automatic release
-* More sophisticated (and faster?) json print (colorize)?
+* Support storing body to file

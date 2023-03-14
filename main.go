@@ -6,12 +6,23 @@ import (
 	"go-http-cli/internal/xjson"
 	"log"
 	"os"
+	"sort"
 
 	"github.com/urfave/cli/v2"
 )
 
+const (
+	red    = "\033[31m"
+	white  = "\033[97m"
+	green  = "\033[32m"
+	cyan   = "\033[36m"
+	yellow = "\033[33m"
+)
+
 func main() {
 	var compact bool
+
+	var include bool
 
 	app := cli.NewApp()
 	app.Name = "Http Client"
@@ -20,9 +31,15 @@ func main() {
 	app.Flags = []cli.Flag{
 		&cli.BoolFlag{
 			Name:        "compact",
-			Value:       false,
+			Aliases:     []string{"c"},
 			Usage:       "use to get compact json",
 			Destination: &compact,
+		},
+		&cli.BoolFlag{
+			Name:        "include",
+			Aliases:     []string{"i"},
+			Usage:       "to include response headers",
+			Destination: &include,
 		},
 	}
 	app.Action = func(cCtx *cli.Context) error {
@@ -38,10 +55,20 @@ func main() {
 			fmt.Printf("%d ms \n %v", res.LatencyInMs, string(res.Body))
 		}
 
-		fmt.Printf("request took: %dms \n %v", res.LatencyInMs, out)
+		fmt.Printf("%srequest latency: %s%dms \n", yellow, cyan, res.LatencyInMs)
+
+		if include {
+			for k, h := range res.Headers {
+				fmt.Printf("%s%s: %s%v\n", red, k, white, h)
+			}
+		}
+
+		fmt.Printf(green + out)
 
 		return nil
 	}
+
+	sort.Sort(cli.FlagsByName(app.Flags))
 
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
