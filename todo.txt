@@ -1,5 +1,4 @@
 * Support sending headers
-* Readme
 * Automatic versioning
 * Automatic release
 * Support sending body in request
