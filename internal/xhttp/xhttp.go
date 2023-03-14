@@ -22,8 +22,9 @@ const (
 // HttpResponse - contains information about the http response.
 type HttpResponse struct {
 	Body        []byte
-	LatencyInMs int64
 	Headers     map[string][]string
+	LatencyInMs int64
+	Status      int
 }
 
 // Call - retrieves the body from the given URL.
@@ -53,7 +54,8 @@ func Call(ctx context.Context, url string, method HttpMethod, body []byte) (*Htt
 
 	return &HttpResponse{
 		Body:        b,
-		LatencyInMs: latency,
 		Headers:     res.Header,
+		LatencyInMs: latency,
+		Status:      res.StatusCode,
 	}, nil
 }

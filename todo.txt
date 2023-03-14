@@ -1,7 +1,7 @@
-* Support POST (Add flag for http verb)
 * Support sending headers
 * Add license file
 * Readme
 * Automatic versioning
 * Automatic release
+* Support sending body in request
 * Support storing body to file

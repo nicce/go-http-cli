@@ -24,6 +24,8 @@ func main() {
 
 	var include bool
 
+	var requestMethod string
+
 	app := cli.NewApp()
 	app.Name = "Http Client"
 	app.Description = "Your cURL replacement"
@@ -38,14 +40,21 @@ func main() {
 		&cli.BoolFlag{
 			Name:        "include",
 			Aliases:     []string{"i"},
-			Usage:       "to include response headers",
+			Usage:       "use to include response headers",
 			Destination: &include,
+		},
+		&cli.StringFlag{
+			Name:        "request",
+			Aliases:     []string{"r"},
+			Usage:       "use to specify http request method",
+			Destination: &requestMethod,
+			Value:       string(xhttp.Get),
 		},
 	}
 	app.Action = func(cCtx *cli.Context) error {
 		rawURL := cCtx.Args().Get(0)
 
-		res, err := xhttp.Call(cCtx.Context, rawURL, xhttp.Get, nil)
+		res, err := xhttp.Call(cCtx.Context, rawURL, xhttp.HttpMethod(requestMethod), nil)
 		if err != nil {
 			return fmt.Errorf("error executing action: %w", err)
 		}
@@ -61,6 +70,8 @@ func main() {
 			for k, h := range res.Headers {
 				fmt.Printf("%s%s: %s%v\n", red, k, white, h)
 			}
+
+			fmt.Printf("%s%s: %s%v\n", red, "Status", white, res.Status)
 		}
 
 		fmt.Printf(green + out)
