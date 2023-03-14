@@ -15,11 +15,13 @@ func PrettyFormat(b []byte, compact bool) (string, error) {
 		if err != nil {
 			return "", fmt.Errorf("error compacting byte array: %w", err)
 		}
-	} else {
-		err := json.Indent(&out, b, "", "  ")
-		if err != nil {
-			return "", fmt.Errorf("error indenting byte array: %w", err)
-		}
+
+		return out.String(), nil
+	}
+
+	err := json.Indent(&out, b, "", "  ")
+	if err != nil {
+		return "", fmt.Errorf("error indenting byte array: %w", err)
 	}
 
 	return out.String(), nil
