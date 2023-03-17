@@ -23,6 +23,8 @@ make lint
 
 ## CLI
 Run `go run main.go --help` for instructions on how to use the CLI.
+You can also run use the build binary like so: `./http --help`.
 
 ## Install
-TBD
+Run Make build recipe to get the binary. Or download it from the release `assets`.
+> **_TIP:_**  Update your path to include the directory where the binary is and you can run `http`from anywhere.
