@@ -27,7 +27,7 @@ clean:
 ## build: Build the application artifacts.
 build: clean
 	@echo "🚀 Building artifacts"
-	@go build -ldflags="-s -w -X '${VERSION_PATH}.Version=${VERSION}' -X '${VERSION_PATH}.Commit=${SHORT_SHA}'" -o bin/${REPO_NAME} .
+	@go build -ldflags="-s -w -X '${VERSION_PATH}.Version=${VERSION}' -X '${VERSION_PATH}.Commit=${SHORT_SHA}'" -o bin/http .
 
 ## run: Run the application
 run: build
