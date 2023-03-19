@@ -15,4 +15,5 @@ jobs:
   Tag:
     name: Tag
     uses: ./.github/workflows/tag.yml
+    needs: Verify
     secrets: inherit
