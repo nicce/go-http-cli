@@ -7,7 +7,7 @@ latest_tag=$(git describe --tags --always --abbrev=0)
 previous_tag=$(git describe --tags --always --abbrev=0 "$latest_tag^")
 
 # Get the commit logs since the last tag
-logs=$(git log "$latest_tag".."$previous_tag" --all --pretty=format:'%s (%h)')
+logs=$(git log "$previous_tag".."$latest_tag" --no-merges --all --pretty=format:'%s (%h)')
 
 # Initialize the changelog
 changelog="## Changelog\n\n"
