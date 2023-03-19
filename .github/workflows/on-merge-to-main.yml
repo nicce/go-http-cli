@@ -12,3 +12,7 @@ jobs:
     name: Verify
     uses: ./.github/workflows/verify.yml
     secrets: inherit
+  Tag:
+    name: Tag
+    uses: ./.github/workflows/tag.yml
+    secrets: inherit
