@@ -1,0 +1,12 @@
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+name: on-tag
+
+jobs:
+  Release:
+    name: Release
+    uses: ./.github/workflows/release.yaml
+    secrets: inherit
