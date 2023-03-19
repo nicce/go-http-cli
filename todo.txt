@@ -1,5 +1,4 @@
 * Support sending headers
-* Automatic versioning
-* Automatic release
 * Support sending body in request
 * Support storing body to file
+* Add binary to release asset
