@@ -1,0 +1,11 @@
+on:
+  release:
+    types: [released]
+
+name: on-release
+
+jobs:
+  Assets:
+    name: Assets
+    uses: ./.github/workflows/assets.yaml
+    secrets: inherit

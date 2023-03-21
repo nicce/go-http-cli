@@ -29,6 +29,11 @@ build: clean
 	@echo "🚀 Building artifacts"
 	@go build -ldflags="-s -w -X '${VERSION_PATH}.Version=${VERSION}' -X '${VERSION_PATH}.Commit=${SHORT_SHA}'" -o bin/http .
 
+## build-tar: Build the application artifact and tar it.
+build-tar: build
+	@echo "📦 Zipping artifacts"
+	tar -zcf bin/http.darwin-arm64.tar.gz bin/http
+
 ## run: Run the application
 run: build
 	@echo "🚀 Running binary"
