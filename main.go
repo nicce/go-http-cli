@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"sort"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -25,6 +26,8 @@ func main() {
 	var include bool
 
 	var requestMethod string
+
+	var headers cli.StringSlice
 
 	app := cli.NewApp()
 	app.Name = "Http Client"
@@ -50,11 +53,19 @@ func main() {
 			Destination: &requestMethod,
 			Value:       string(xhttp.Get),
 		},
+		&cli.StringSliceFlag{
+			Name:        "headers",
+			Aliases:     []string{"H"},
+			Usage:       "use to specify http request headers, like -H 'content-type: application/json'",
+			Destination: &headers,
+		},
 	}
 	app.Action = func(cCtx *cli.Context) error {
 		rawURL := cCtx.Args().Get(0)
 
-		res, err := xhttp.Call(cCtx.Context, rawURL, xhttp.HttpMethod(requestMethod), nil)
+		h := transformHeaders(headers.Value())
+
+		res, err := xhttp.Call(cCtx.Context, rawURL, xhttp.HttpMethod(requestMethod), h, nil)
 		if err != nil {
 			return fmt.Errorf("error executing action: %w", err)
 		}
@@ -84,4 +95,15 @@ func main() {
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func transformHeaders(headers []string) map[string]string {
+	h := make(map[string]string)
+
+	for _, s := range headers {
+		b := strings.Split(s, ":")
+		h[b[0]] = strings.TrimSpace(b[1])
+	}
+
+	return h
 }

@@ -28,12 +28,16 @@ type HttpResponse struct {
 }
 
 // Call - retrieves the body from the given URL.
-func Call(ctx context.Context, url string, method HttpMethod, body []byte) (*HttpResponse, error) {
+func Call(ctx context.Context, url string, method HttpMethod, headers map[string]string, body []byte) (*HttpResponse, error) {
 	client := &http.Client{}
 
 	req, err := http.NewRequestWithContext(ctx, string(method), url, bytes.NewReader(body))
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+
+	for k, v := range headers {
+		req.Header.Set(k, v)
 	}
 
 	start := time.Now()
