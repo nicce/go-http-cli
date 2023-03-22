@@ -1,4 +1,3 @@
 * Support sending headers
 * Support sending body in request
 * Support storing body to file
-* Add binary to release asset
