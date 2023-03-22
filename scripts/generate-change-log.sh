@@ -19,6 +19,9 @@ while read -r log; do
     feat*)
       feat_logs+="* ${log}\n"
       ;;
+    !feat*)
+      feat_logs+="* ${log} 💥breaking change\n"
+      ;;
     fix*)
       fix_logs+="* ${log}\n"
       ;;
