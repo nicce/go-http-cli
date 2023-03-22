@@ -28,13 +28,15 @@ type HttpResponse struct {
 }
 
 // Call - retrieves the body from the given URL.
-func Call(ctx context.Context, url string, method HttpMethod, headers map[string]string, body []byte) (*HttpResponse, error) {
+func Call(ctx context.Context, url string, method HttpMethod, headers map[string]string, body string) (*HttpResponse, error) {
 	client := &http.Client{}
 
-	req, err := http.NewRequestWithContext(ctx, string(method), url, bytes.NewReader(body))
+	req, err := http.NewRequestWithContext(ctx, string(method), url, bytes.NewBuffer([]byte(body)))
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
+
+	req.Header.Set("Content-Type", "application/json")
 
 	for k, v := range headers {
 		req.Header.Set(k, v)

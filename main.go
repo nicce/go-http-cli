@@ -29,6 +29,8 @@ func main() {
 
 	var headers cli.StringSlice
 
+	var body string
+
 	app := cli.NewApp()
 	app.Name = "Http Client"
 	app.Description = "Your cURL replacement"
@@ -59,13 +61,19 @@ func main() {
 			Usage:       "use to specify http request headers, like -H 'content-type: application/json'",
 			Destination: &headers,
 		},
+		&cli.StringFlag{
+			Name:        "data",
+			Aliases:     []string{"d"},
+			Usage:       "use to specify http json body",
+			Destination: &body,
+		},
 	}
 	app.Action = func(cCtx *cli.Context) error {
 		rawURL := cCtx.Args().Get(0)
 
-		h := transformHeaders(headers.Value())
+		h := parseHeaders(headers.Value())
 
-		res, err := xhttp.Call(cCtx.Context, rawURL, xhttp.HttpMethod(requestMethod), h, nil)
+		res, err := xhttp.Call(cCtx.Context, rawURL, xhttp.HttpMethod(requestMethod), h, body)
 		if err != nil {
 			return fmt.Errorf("error executing action: %w", err)
 		}
@@ -97,7 +105,7 @@ func main() {
 	}
 }
 
-func transformHeaders(headers []string) map[string]string {
+func parseHeaders(headers []string) map[string]string {
 	h := make(map[string]string)
 
 	for _, s := range headers {

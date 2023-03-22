@@ -1,3 +1,2 @@
-* Support sending headers
-* Support sending body in request
 * Support storing body to file
+* Sync cli version with release tag
