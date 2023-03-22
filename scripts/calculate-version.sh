@@ -35,7 +35,7 @@ do
   esac
 done
 
-if $should_bump_major ; then version=$(echo "$latest_tag" | awk -F"." '{print $1+1 ".0" ".0"}')
+if $should_bump_major ; then version=v$(echo "$latest_tag" | awk -F"." '{print v$1+1 ".0" ".0"}')
 elif $should_bump_minor ; then version=$(echo "$latest_tag" | awk -F"." '{print $1 "." $2+1 ".0"}')
 elif $should_bump_revision ; then version=$(echo "$latest_tag" | awk -F"." '{print $1 "." $2 "." $3+1}') ; fi
 

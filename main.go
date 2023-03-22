@@ -34,7 +34,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "Http Client"
 	app.Description = "Your cURL replacement"
-	app.Version = "v0.0.1"
+	app.Version = "v1.0.0"
 	app.Flags = []cli.Flag{
 		&cli.BoolFlag{
 			Name:        "compact",
