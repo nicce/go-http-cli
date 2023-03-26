@@ -9,7 +9,7 @@ TAG_NAME := $(shell git describe --exact-match --tags 2> /dev/null)
 VERSION := $(if ${TAG_NAME},${TAG_NAME},"unversioned")
 VERSION_PATH := github.com/nicce/${REPO_NAME}/internal/version
 
-GOLANGCI_LINT_VERSION := v1.51.0
+GOLANGCI_LINT_VERSION := v1.52.2
 GOLANGCI_LINT := bin/golangci-lint_$(GOLANGCI_LINT_VERSION)/golangci-lint
 GOLINTCI_LINT_URL := https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh
 
