@@ -1,2 +1,1 @@
 * Support storing body to file
-* Sync cli version with release tag
