@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
-	"go-http-cli/internal/xhttp"
-	"go-http-cli/internal/xjson"
 	"log"
 	"os"
 	"sort"
 	"strings"
+
+	"github.com/nicce/go-http-cli/internal/version"
+	"github.com/nicce/go-http-cli/internal/xhttp"
+	"github.com/nicce/go-http-cli/internal/xjson"
 
 	"github.com/urfave/cli/v2"
 )
@@ -34,7 +36,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "Http Client"
 	app.Description = "Your cURL replacement"
-	app.Version = "v1.0.0"
+	app.Version = version.Version
 	app.Flags = []cli.Flag{
 		&cli.BoolFlag{
 			Name:        "compact",

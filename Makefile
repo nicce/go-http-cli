@@ -5,6 +5,9 @@ ARCHITECTURE := $(shell uname -m | sed "s/x86_64/amd64/g")
 GIT_REPO := $(shell git config --get remote.origin.url)
 REPO_NAME := $(shell basename ${GIT_REPO} .git)
 SHORT_SHA := $(shell git rev-parse --short HEAD)
+TAG_NAME := $(shell git describe --exact-match --tags 2> /dev/null)
+VERSION := $(if ${TAG_NAME},${TAG_NAME},"unversioned")
+VERSION_PATH := github.com/nicce/${REPO_NAME}/internal/version
 
 GOLANGCI_LINT_VERSION := v1.51.0
 GOLANGCI_LINT := bin/golangci-lint_$(GOLANGCI_LINT_VERSION)/golangci-lint

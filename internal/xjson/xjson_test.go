@@ -1,8 +1,9 @@
 package xjson_test
 
 import (
-	"go-http-cli/internal/xjson"
 	"testing"
+
+	"github.com/nicce/go-http-cli/internal/xjson"
 )
 
 // TestPrettyFormatCompactedJson - verifies the json string is compacted.

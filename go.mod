@@ -1,4 +1,4 @@
-module go-http-cli
+module github.com/nicce/go-http-cli
 
 go 1.20
 
