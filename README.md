@@ -3,6 +3,7 @@
 A http cli written in GoLang.
 
 ![Github Actions Workflow](https://github.com/nicce/go-http-cli/actions/workflows/on-merge-to-main.yml/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/nicce/go-http-cli)](https://goreportcard.com/report/github.com/nicce/go-http-cli)
 
 ## Usage
 
