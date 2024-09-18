@@ -27,10 +27,7 @@ do
     feat*) # Increment the minor version number for a new feature
       should_bump_minor=true
       ;;
-    fix*) # Increment the patch version number for a bug fix
-      should_bump_revision=true
-      ;;
-    build\(deps\)*)
+    fix*|build\(deps\)*) # Increment the patch version number for a bug fix
       should_bump_revision=true
       ;;
     *) # Ignore other commit types
