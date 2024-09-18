@@ -85,17 +85,16 @@ func main() {
 			fmt.Printf("%d ms \n %v", res.LatencyInMs, string(res.Body))
 		}
 
-		fmt.Printf("%srequest latency: %s%dms \n", yellow, cyan, res.LatencyInMs)
-
 		if include {
 			for k, h := range res.Headers {
-				fmt.Printf("%s%s: %s%v\n", red, k, white, h)
+				fmt.Printf("%s%s: %s%v\n", cyan, k, white, h)
 			}
 
 			fmt.Printf("%s%s: %s%v\n", red, "Status", white, res.Status)
 		}
 
-		fmt.Print(green + out)
+		fmt.Println(green + out)
+		fmt.Printf("%srequest latency: %s%dms \n", yellow, cyan, res.LatencyInMs)
 
 		return nil
 	}
