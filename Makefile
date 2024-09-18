@@ -9,11 +9,11 @@ TAG_NAME := $(shell git describe --exact-match --tags 2> /dev/null)
 VERSION := $(if ${TAG_NAME},${TAG_NAME},"unversioned")
 VERSION_PATH := github.com/nicce/${REPO_NAME}/internal/version
 
-GOLANGCI_LINT_VERSION := v1.52.2
+GOLANGCI_LINT_VERSION := v1.61.0
 GOLANGCI_LINT := bin/golangci-lint_$(GOLANGCI_LINT_VERSION)/golangci-lint
 GOLINTCI_LINT_URL := https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh
 
-GOTESTSUM_VERSION := 1.9.0
+GOTESTSUM_VERSION := 1.12.0
 GOTESTSUM := bin/gotestsum_v$(GOTESTSUM_VERSION)/gotestsum
 GOTESTSUM_URL := https://github.com/gotestyourself/gotestsum/releases/download/v$(GOTESTSUM_VERSION)/gotestsum_$(GOTESTSUM_VERSION)_$(OS)_$(ARCHITECTURE).tar.gz
 

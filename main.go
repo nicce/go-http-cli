@@ -95,7 +95,7 @@ func main() {
 			fmt.Printf("%s%s: %s%v\n", red, "Status", white, res.Status)
 		}
 
-		fmt.Printf(green + out)
+		fmt.Print(green + out)
 
 		return nil
 	}

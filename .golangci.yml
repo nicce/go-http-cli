@@ -1,20 +1,17 @@
 ---
 run:
   timeout: 5m
-  skip-dirs:
-    - bin
-    - generated
 linters:
   enable:
     - asciicheck
     - bodyclose
+    - copyloopvar
     - depguard
     - dogsled
     - dupl
     - errcheck
     - errorlint
     - exhaustive
-    - exportloopref
     - gochecknoglobals
     - gochecknoinits
     - gocognit
@@ -23,11 +20,11 @@ linters:
     - gocyclo
     - godot
     - godox
-    - goerr113
+    - err113
     - gofmt
     - goheader
     - goimports
-    - gomnd
+    - mnd
     - gomodguard
     - goprintffuncname
     - gosec
@@ -66,6 +63,9 @@ issues:
         - errorlint
         - gocyclo
         - goerr113
+  exclude-dirs:
+    - bin
+    - generated
 linters-settings:
   dupl:
     threshold: 200
@@ -82,3 +82,10 @@ linters-settings:
       - encoding/*
       - github.com/gofiber/fiber/*
       - google.golang.org/grpc/status
+  depguard:
+    rules:
+      main:
+        allow:
+          - $gostd
+          - github.com/nicce
+          - github.com/urfave/cli
