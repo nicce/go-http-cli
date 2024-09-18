@@ -30,6 +30,9 @@ do
     fix*) # Increment the patch version number for a bug fix
       should_bump_revision=true
       ;;
+    build\(deps\)*)
+      should_bump_revision=true
+      ;;
     *) # Ignore other commit types
       ;;
   esac
